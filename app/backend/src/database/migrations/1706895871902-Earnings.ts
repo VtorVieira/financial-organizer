@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class Transactions1706832560194 implements MigrationInterface {
+export class Earnings1706895871902 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "transaction",
+        name: "earn",
         columns: [
           {
             name: "id",
@@ -13,8 +13,8 @@ export class Transactions1706832560194 implements MigrationInterface {
             generationStrategy: "uuid",
           },
           {
-            name: "description",
-            type: "varchar",
+            name: "salary",
+            type: "integer",
             isNullable: true,
           },
           {
@@ -23,25 +23,13 @@ export class Transactions1706832560194 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: "type",
-            type: "enum",
-            isNullable: false,
-            enum: ["income", "expense"],
-            default: "expense",
-          },
-          {
-            name: "note",
+            name: "description",
             type: "varchar",
             isNullable: true,
           },
           {
             name: "userId",
             type: "uuid",
-          },
-          {
-            name: "categoryID",
-            type: "uuid",
-            isNullable: true,
           },
           {
             name: "created_at",
@@ -61,18 +49,12 @@ export class Transactions1706832560194 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: "FK_Transactions_Users",
+            name: "FK_Earnings_Users",
             referencedTableName: "users",
             referencedColumnNames: ["id"],
             columnNames: ["userId"],
             onDelete: "CASCADE",
             onUpdate: "CASCADE",
-          },
-          {
-            name: "FK_Transactions_Categories",
-            referencedTableName: "categories",
-            referencedColumnNames: ["id"],
-            columnNames: ["categoryID"],
           },
         ],
       })
@@ -80,6 +62,6 @@ export class Transactions1706832560194 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("transactions");
+    await queryRunner.dropTable("earnings");
   }
 }
